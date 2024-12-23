@@ -9,7 +9,8 @@ code." You can visit the production tracker here:
 This repository holds the AWS CloudFormation template for the tracker (in
 `template.yaml`). The job is a Lambda that runs daily. This repository uses
 [SAM][1], a handy wrapper around [CloudFormation][2]. The frontend (in
-`frontend/`) is a simple React app.
+`frontend/`) is a simple React app. I've licensed all this under the MIT
+license in case anyone wants to adapt/improve it.
 
 How I update the backend (maybe [pipx][3] can replace the first two commands):
 

@@ -1,14 +1,17 @@
-gtpd-monitor
-============
+GTPD Mental Health Incident Response Monitor
+============================================
 
-This is the CloudFormation template for a tracker for incidents in which the
-Georgia Tech Police Department reported an incident tagged with the mental
-health "offense code". The job runs daily. This repository uses [SAM][1], a
-handy wrapper around [CloudFormation][2]. The frontend (in `frontend/`) is a
-simple React app.
+This is the source code for a tracker for incidents in which the Georgia Tech
+Police Department reported an incident tagged with the mental health "offense
+code." You can visit the production tracker here:
+<https://gtpd-monitor.austinjadams.com/>
 
-How to update (you should be able to use something like `pipx` instead of the
-first two commands if you want, although I haven't tried it myself):
+This repository holds the AWS CloudFormation template for the tracker (in
+`template.yaml`). The job is a Lambda that runs daily. This repository uses
+[SAM][1], a handy wrapper around [CloudFormation][2]. The frontend (in
+`frontend/`) is a simple React app.
+
+How I update the backend (maybe [pipx][3] can replace the first two commands):
 
     $ . ~/.venv/bin/activate
     $ pip install --upgrade awscli aws-sam-cli
@@ -42,3 +45,4 @@ Links
 
 [1]: https://aws.amazon.com/serverless/sam/
 [2]: https://aws.amazon.com/cloudformation/
+[3]: https://github.com/pypa/pipx

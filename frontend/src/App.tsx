@@ -49,7 +49,7 @@ function incidentsToByMonthChartData(incidents: Incidents) {
                                         .by_month
                                         .map((month_count, month_idx) =>
                                              ({name: withinRange(year, month_idx, incidents)
-                                                     ? monthIdxToName(month_idx, true) + ' ' + year
+                                                     ? monthIdxToName(month_idx, true) + ' \'' + (year % 100)
                                                      : null,
                                                count: month_count}))
                                         .filter(datapt => datapt.name !== null));
@@ -93,11 +93,11 @@ function App(props: AppProps) {
   } else {
     const byMonthChartData = incidentsToByMonthChartData(incidents);
     const byMonthChart = (
-      <AreaChart width={512} height={256} data={byMonthChartData} margin={{top: 0, right: 0, bottom: 15, left: 0}}>
+      <AreaChart width={650} height={350} data={byMonthChartData} margin={{top: 0, right: 0, bottom: 55, left: 0}}>
         <Area type="step" name="Calls" dataKey="count" stroke="gray" fill="#B3A369" />
         <CartesianGrid stroke="gray" strokeDasharray="2 2" />
-        <XAxis dataKey="name">
-          <Label value="Month" position="insideBottom" offset={-15} />
+        <XAxis dataKey="name" angle={-90} textAnchor="end">
+          <Label value="Month" position="insideBottom" offset={-50} />
         </XAxis>
         <YAxis>
           <Label value="Mental Health Calls Reported" position="insideLeft" angle={-90} offset={10} style={{textAnchor: 'middle'}} />
@@ -114,7 +114,7 @@ function App(props: AppProps) {
                                    (_, i) => incidents.start_year + i)
                              .map((year, i) => (<Area key={year} type="step" name={"Calls in " + year} dataKey={"year" + year} stroke="none" fill={yearFills[i % yearFills.length]} stackId="1" />));
     const byHourChart = (
-      <AreaChart width={512} height={300} data={byHourChartData} margin={{top: 0, right: 0, bottom: 30, left: 0}}>
+      <AreaChart width={650} height={350} data={byHourChartData} margin={{top: 0, right: 0, bottom: 30, left: 0}}>
         {byHourAreas}
         <CartesianGrid stroke="gray" strokeDasharray="2 2" />
         <XAxis dataKey="hour">
@@ -130,9 +130,11 @@ function App(props: AppProps) {
 
     return (
       <div className="App">
-          <p>Times the Georgia Tech Police Department responded to a mental health incident in <strong>{incidents.end_year}</strong>:</p>
-          <p className="App-counter">{incidents.year_incidents[incidents.end_year].by_month.reduce((a,b) => a+b, 0)}</p>
-          <p>Past years: {pastYears(incidents)}</p>
+          <header>
+            <p>Times the Georgia Tech Police Department responded to a mental health incident in <strong>{incidents.end_year}</strong>:</p>
+            <p className="App-counter">{incidents.year_incidents[incidents.end_year].by_month.reduce((a,b) => a+b, 0)}</p>
+            <p>Past years: {pastYears(incidents)}</p>
+          </header>
           <p>Month-by-month statistics:</p>
           <div className="chart">{byMonthChart}</div>
           <p className="App-lilskip">Hour-by-hour statistics:</p>

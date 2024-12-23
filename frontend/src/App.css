@@ -2,8 +2,20 @@ html, body {
     background-color: white;
 }
 
-.App {
+header {
+    display: block;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+footer {
+    display: block;
     max-width: 512px;
+    margin: 0 auto;
+}
+
+.App {
+    max-width: 650px;
     margin: 64px auto 0 auto;
 
     color: black;

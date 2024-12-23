@@ -25,10 +25,26 @@ interface Incidents {
 
 function pastYears(incidents: Incidents) {
   return Array.from({length: incidents.end_year-incidents.start_year},
-                    (_, i) => (<span className="App-pastyear" key={i}><strong>{(incidents.start_year + i) + ((i === 0 && incidents.start_month > 0)? '*' : '')}:</strong>&nbsp;
-                               {incidents.year_incidents[incidents.start_year + i]
-                                         .by_month
-                                         .reduce((a,b) => a+b, 0)}</span>));
+                    (_, i) => incidents.year_incidents[incidents.start_year + i]
+                                       .by_month
+                                       .reduce((a,b) => a+b, 0));
+}
+
+function pastYearsSpans(incidents: Incidents) {
+  return pastYears(incidents).map((count, i) => (
+    <span className="App-pastyear" key={i}>
+      <strong>
+        {(incidents.start_year + i) + ((i === 0 && incidents.start_month > 0)? '*' : '')}:
+      </strong>
+      &nbsp;{count}
+    </span>));
+}
+
+function grandTotal(incidents: Incidents) {
+  return Array.from({length: incidents.end_year-incidents.start_year+1}, // fencepost
+                    (_, i) => incidents.start_year + i)
+              .flatMap(year => incidents.year_incidents[year].by_month)
+              .reduce((a,b) => a+b, 0);
 }
 
 function withinRange(year: number, month_idx: number, incidents: Incidents) {
@@ -130,12 +146,14 @@ function App(props: AppProps) {
       </AreaChart>
     );
 
+    const this_year_total = incidents.year_incidents[incidents.end_year].by_month.reduce((a,b) => a+b, 0);
+
     return (
       <div className="App">
           <header>
             <p>Times the Georgia Tech Police Department responded to a mental health incident in <strong>{incidents.end_year}</strong>:</p>
-            <p className="App-counter">{incidents.year_incidents[incidents.end_year].by_month.reduce((a,b) => a+b, 0)}</p>
-            <p>Past years: {pastYears(incidents)}</p>
+            <p className="App-counter">{this_year_total}</p>
+            <p>Past years: {pastYearsSpans(incidents)}. All-time total: <strong>{grandTotal(incidents)}</strong>.</p>
           </header>
           <p>Month-by-month statistics:</p>
           <div className="chart">{byMonthChart}</div>

@@ -93,7 +93,9 @@ def parse_incidents(fp, year):
     for row in reader:
         num_rows += 1
         date_str, time_str = row[FROM_DATE_COL], row[FROM_TIME_COL]
-        date = None if {'NULL', ''} & {date_str.upper(), time_str.upper()} else to_datetime(date_str, time_str)
+        date = None if None in (date_str, time_str) or \
+                        {'NULL', ''} & {date_str.upper(), time_str.upper()} \
+                    else to_datetime(date_str, time_str)
         if not date:
             print('warning: row {} is missing a date or time. ignoring...'.format(num_rows))
         elif date.year != year:

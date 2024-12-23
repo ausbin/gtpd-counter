@@ -7,9 +7,11 @@ health "offense code". The job runs daily. This repository uses [SAM][1], a
 handy wrapper around [CloudFormation][2]. The frontend (in `frontend/`) is a
 simple React app.
 
-How to update:
+How to update (you should be able to use something like `pipx` instead of the
+first two commands if you want, although I haven't tried it myself):
 
-    $ pip3 install --user --upgrade awscli aws-sam-cli
+    $ . ~/.venv/bin/activate
+    $ pip install --upgrade awscli aws-sam-cli
     $ ./update.sh
 
 The first time you run this, you'll need to:

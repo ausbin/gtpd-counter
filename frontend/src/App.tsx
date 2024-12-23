@@ -109,7 +109,9 @@ function App(props: AppProps) {
     const byHourChartData = incidentsToByHourChartData(incidents);
     // Using the print tertiary colors from https://brand.gatech.edu/our-look/colors
     // because the "web-only" ones are UGLY
-    const yearFills = ['#5F249F', '#64CCC9', '#FFCD00', '#3A5DAE', '#A4D233', '#E04F39', '#008C95'];
+    // 2024 update: We are running out of colors, folks. I added "Tech medium
+    // gold" and "Gray matter" to buy us some time through 2026
+    const yearFills = ['#5F249F', '#64CCC9', '#FFCD00', '#3A5DAE', '#A4D233', '#E04F39', '#008C95', '#A4925A', '#54585A'];
     const byHourAreas = Array.from({length: incidents.end_year-incidents.start_year+1},
                                    (_, i) => incidents.start_year + i)
                              .map((year, i) => (<Area key={year} type="step" name={"Calls in " + year} dataKey={"year" + year} stroke="none" fill={yearFills[i % yearFills.length]} stackId="1" />));
